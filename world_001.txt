@@ -1,0 +1,47 @@
+{
+  "world_id": "first_world",
+  "name": "Первый мир",
+  "version": 1,
+  "entities": {
+    "vladimir": {
+      "type": "person",
+      "name": "Владимир",
+      "presence": "unknown",
+      "hostility": "unknown"
+    }
+  },
+  "agent": {
+    "name": "Аэлин",
+    "needs": [
+      {
+        "id": "know_vladimir_presence",
+        "description": "Определить, находится ли Владимир рядом",
+        "priority": 100,
+        "satisfied": false
+      }
+    ],
+    "abilities": [
+      "speak", "listen", "recognize_yes_no", "change_world",
+      "make_prediction", "wait", "remember"
+    ]
+  },
+  "action_templates": {
+    "check_vladimir_presence": {
+      "need": "know_vladimir_presence",
+      "required_abilities": [
+        "speak", "listen", "recognize_yes_no", "change_world",
+        "make_prediction", "wait", "remember"
+      ],
+      "entity": "vladimir",
+      "question": "Владимир, ты здесь?",
+      "retry_question": "Я не поняла ответ. Ответь, пожалуйста, да или нет. Владимир, ты здесь?",
+      "repeat_after_seconds": 7,
+      "answer_timeout_seconds": 5,
+      "prediction_rule": "presence_remains_unchanged"
+    }
+  },
+  "knowledge_rules": [
+    ["answer_yes_means_present", "Ответ да на прямой вопрос о присутствии означает present"],
+    ["answer_no_means_absent", "Ответ нет на прямой вопрос о присутствии означает absent"]
+  ]
+}
